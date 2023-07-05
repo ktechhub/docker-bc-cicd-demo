@@ -12,7 +12,7 @@ run-app:
 	uvicorn main:app --reload
 
 build:
-	docker build -t demo-fastapi:latest .
+	docker build -t demo-fastapi:latest . -f multi.Dockerfile
 
 run:
 	docker run  --name demo-fastapi -d -p 8000:8000 demo-fastapi:latest
@@ -21,7 +21,7 @@ destroy:
 	docker rm demo-fastapi --force
 
 build-and-run:
-	docker build -t demo-fastapi:latest . && \
+	docker build -t demo-fastapi:latest . -f multi.Dockerfile && \
 	docker run  --name demo-fastapi -d -p 8000:8000 demo-fastapi:latest
 
 dc-up:

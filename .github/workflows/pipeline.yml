@@ -36,27 +36,27 @@ jobs:
         uses: rickstaa/action-black@v1
         with:
           black_args: ". --check"
-      
+
       - name: Build App
         run: |
           cp .env.example .env
           make build
-        
+
       - name: Run App
         run: |
           make run
           sleep 30
-      
+
       # - name: build and Run App
       #   run: |
       #     cp .env.example .env
       #     make build-and-run
       #     sleep 30
-      
+
       - name: Test app with Curl
         run: |
           curl http://127.0.0.1:8000/api/v1/brands/list
-      
+
       - name: Run Pytest
         run: |
           pytest tests/
@@ -73,11 +73,8 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
       - name: Build Docker Image
-        run: docker buildx build --platform linux/amd64,linux/arm64 --push -t ktechhub/docker-bc-cicd-demo:latest . -f multi.Dockerfile
+        run: docker build -t ktechhub/docker-bc-cicd-demo:latest . -f multi.Dockerfile
 
       - name: Install Trivy
         run: |
