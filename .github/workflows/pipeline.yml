@@ -77,7 +77,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker Image
-        run: docker buildx build --platform linux/amd64,linux/arm64 --push -t your-docker-username/your-image-name:latest . -f multi.Dockerfile
+        run: docker buildx build --platform linux/amd64,linux/arm64 --push -t ktechhub/docker-bc-cicd-demo:latest . -f multi.Dockerfile
 
       - name: Install Trivy
         run: |
@@ -86,11 +86,12 @@ jobs:
           sudo mv trivy /usr/local/bin/
 
       - name: Scan Docker Image with Trivy
-        run: trivy --exit-code 1 --severity HIGH --no-progress your-docker-username/your-image-name:latest
+        run: trivy --exit-code 1 --severity HIGH --no-progress ktechhub/docker-bc-cicd-demo:latest
 
   push:
     needs: build
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
       - name: Login to Docker Hub
@@ -100,4 +101,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker Image to Docker Hub
-        run: docker push your-docker-username/your-image-name:latest
+        run: docker push ktechhub/docker-bc-cicd-demo:latest
