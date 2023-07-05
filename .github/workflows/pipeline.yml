@@ -91,6 +91,9 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Build Docker Image
         run: docker build -t ktechhub/docker-bc-cicd-demo:latest . -f multi.Dockerfile
 
