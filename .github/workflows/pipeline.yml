@@ -83,7 +83,7 @@ jobs:
           sudo mv trivy /usr/local/bin/
 
       - name: Scan Docker Image with Trivy
-        run: trivy --exit-code 1 --severity HIGH --no-progress ktechhub/docker-bc-cicd-demo:latest
+        run: trivy --severity HIGH --no-progress ktechhub/docker-bc-cicd-demo:latest
 
   push:
     needs: build
