@@ -45,7 +45,7 @@ jobs:
       - name: Run App
         run: |
           make run
-          sleep 30
+          sleep 10
 
       # - name: build and Run App
       #   run: |
@@ -94,8 +94,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Automatic Tagging of Releases
+        uses: rymndhng/release-on-push-action@master
+        id: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+        with:
+          tag_prefix: ""
+          bump_version_scheme: major
+          release_body: "The official release for ktechhub/docker-bc-cicd-demo"
+
+      - name: Check Release Output Parameters
+        run: |
+          echo "Got tag name ${{ steps.release.outputs.tag_name }}"
+          echo "Got release version ${{ steps.release.outputs.version }}"
+
       - name: Build Docker Image
-        run: docker build -t ktechhub/docker-bc-cicd-demo:latest . -f multi.Dockerfile
+        run: docker build -t ktechhub/docker-bc-cicd-demo:${{ steps.release.outputs.version }} . -f multi.Dockerfile
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
@@ -104,4 +119,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker Image to Docker Hub
-        run: docker push ktechhub/docker-bc-cicd-demo:latest
+        run: docker push ktechhub/docker-bc-cicd-demo:${{ steps.release.outputs.version }}
