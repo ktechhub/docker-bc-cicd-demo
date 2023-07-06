@@ -14,7 +14,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.9, 3.10]
+        python-version: [3.9]
     # env:
     #   STATIC_ACCESS_KEY_ID: ${{ secrets.STATIC_ACCESS_KEY_ID }}
 
