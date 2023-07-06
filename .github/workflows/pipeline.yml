@@ -101,7 +101,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           tag_prefix: ""
-          bump_version_scheme: major
+          bump_version_scheme: patch
           release_body: "The official release for ktechhub/docker-bc-cicd-demo"
 
       - name: Check Release Output Parameters
