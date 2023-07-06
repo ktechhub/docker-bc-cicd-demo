@@ -12,7 +12,6 @@ source venv/bin/activate && \
 pip install --upgrade pip && \
 pip install --no-cache-dir --upgrade -r requirements.txt
 ```
-
 ## Run App
 ```sh
 uvicorn main:app --reload
